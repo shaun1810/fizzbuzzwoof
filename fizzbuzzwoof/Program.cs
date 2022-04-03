@@ -62,12 +62,12 @@
        
         if (rules.Count != 0)
         {
-            var array = ArrayCreator();
-            for (int i = 0; i == array.Length; i++)
+            var numbers = ArrayCreator();
+            for (int i = 0; i < numbers.Length; i++)
             {
                 foreach (KeyValuePair<int, string> rule in rules)
                 {
-                    if (rule.Key == array[i])
+                    if (rule.Key == numbers[i])
                     {
                         Console.WriteLine(rule.Value);
                     }
@@ -115,21 +115,37 @@
         while (userCreatingRules == true)
         {
             int result;
+            bool duplicate = false;
             Console.WriteLine("Please enter a number to find multiples of!");
             var choice = Console.ReadLine();
             if ((int.TryParse(choice, out result) == true))
             {
-                bool wordSelecting = true;
-                while (wordSelecting == true)
-                {
-                    Console.WriteLine("Please input a buzz word!");
-                    var word = Console.ReadLine();
-                    if (!string.IsNullOrEmpty(word))
+                if (rules.Count != 0) {
+
+                    foreach (KeyValuePair<int, string> rule in rules)
                     {
-                        rules.Add(new KeyValuePair<int, string>(result, word));
-                        wordSelecting = false;
+                        if (result == rule.Key)
+                        {
+                            duplicate = true;
+                            Console.WriteLine("Cannot enter same number twice!");
+                        }
                     }
-                    else { Console.WriteLine("Word cannot be null!\n"); }
+                        
+                }
+                if (duplicate == false)
+                {
+                    bool wordSelecting = true;
+                    while (wordSelecting == true)
+                    {
+                        Console.WriteLine("Please input a buzz word!");
+                        var word = Console.ReadLine();
+                        if (!string.IsNullOrEmpty(word))
+                        {
+                            rules.Add(new KeyValuePair<int, string>(result, word));
+                            wordSelecting = false;
+                        }
+                        else { Console.WriteLine("Word cannot be null!\n"); }
+                    }
                 }
             }
             else
