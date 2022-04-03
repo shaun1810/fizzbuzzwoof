@@ -67,7 +67,7 @@
             {
                 foreach (KeyValuePair<int, string> rule in rules)
                 {
-                    if (rule.Key == numbers[i])
+                    if (numbers[i] % rule.Key == 0)
                     {
                         Console.WriteLine(rule.Value);
                     }
